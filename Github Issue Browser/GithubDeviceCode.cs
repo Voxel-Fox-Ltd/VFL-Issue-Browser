@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Web;
 
-namespace GithubIssueBrowser
+namespace VFLIssueBrowser
 {
     public class GithubDeviceCode
     {

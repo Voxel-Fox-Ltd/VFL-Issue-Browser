@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GithubIssueBrowser
+namespace VFLIssueBrowser
 {
 
     public class GithubUser

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -11,18 +12,17 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GithubIssueBrowser
+namespace VFLIssueBrowser
 {
     public partial class MainGitIssueWindow : Form
     {
 
-        private static readonly HttpClient http = new HttpClient();
+        private static readonly HttpClient Http = new HttpClient();
+        private static List<LoggedInUser> LoggedInUsers = new List<LoggedInUser>();
 
         public MainGitIssueWindow()
         {
-            Console.WriteLine($"Before startup");
             InitializeComponent();
-            Console.WriteLine($"After startup");
         }
 
         private GithubDeviceCode GetDeviceFlowCode()
@@ -43,7 +43,7 @@ namespace GithubIssueBrowser
 
             // Make the POST request
             Console.WriteLine("Sending POST request");
-            var siteTask = http.SendAsync(request);
+            var siteTask = Http.SendAsync(request);
             siteTask.Wait();
             var site = siteTask.Result;
             Console.WriteLine($"Sent POST request - {site.StatusCode}");
@@ -78,7 +78,7 @@ namespace GithubIssueBrowser
 
             // Make the POST request
             Console.WriteLine($"Sending POST request {request.RequestUri}");
-            var siteTask = http.SendAsync(request);
+            var siteTask = Http.SendAsync(request);
             siteTask.Wait();
             var site = siteTask.Result;
             Console.WriteLine($"Sent POST request - {site.StatusCode}");
@@ -118,7 +118,7 @@ namespace GithubIssueBrowser
 
             // Make the POST request
             Console.WriteLine($"Sending GET request {request.RequestUri}");
-            var siteTask = http.SendAsync(request);
+            var siteTask = Http.SendAsync(request);
             siteTask.Wait();
             var site = siteTask.Result;
             Console.WriteLine($"Sent GET request - {site.StatusCode}");
@@ -137,14 +137,63 @@ namespace GithubIssueBrowser
 
         private void LoginStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Get a device code
             var deviceFlow = GetDeviceFlowCode();
             if (deviceFlow == null) return;
+
+            // Open the login page
             Console.WriteLine($"Opening web window - {deviceFlow.VerificationUri}");
             Process.Start("explorer", deviceFlow.VerificationUri);
             Clipboard.SetText(deviceFlow.UserCode);
             MessageBox.Show($"Please use the following device code to verify:\n{deviceFlow.UserCode}\nIt has been copied to your clipboard.");
+
+            // Get their access token and username
             string at = GetGithubAccessToken(deviceFlow);
-            Console.WriteLine(GetGithubUsername(at));
+            string username = GetGithubUsername(at);
+            LoggedInUsers.Add(new LoggedInUser(username, at));
+
+            // Save stuff to file
+            SaveLoggedInUsers();
+        }
+
+        private void SaveLoggedInUsers()
+        {
+            string path = Environment.ExpandEnvironmentVariables("%appdata%/VFL IssueBrowser");
+            DirectoryInfo di = new DirectoryInfo(path);
+            di.Create();
+            using (StreamWriter writer = new StreamWriter($"{path}/auth.json"))
+            {
+                writer.WriteLine(GetLoggedInUsersJson());
+            }
+        }
+
+        private void LoadLoggedInUsers()
+        {
+            string path = Environment.ExpandEnvironmentVariables("%appdata%/VFL IssueBrowser");
+            string data;
+            using (StreamReader reader = new StreamReader($"{path}/auth.json"))
+            {
+                data = reader.ReadToEnd();
+            }
+            LoggedInUsers = JsonSerializer.Deserialize<List<LoggedInUser>>(data);
+        }
+
+        private string GetLoggedInUsersJson()
+        {
+            var sb = new StringBuilder();
+            sb.Append("[");
+            var index = 1;
+            foreach(LoggedInUser i in LoggedInUsers)
+            {
+                sb.Append(i.ToJson());
+                index++;
+                if(index < LoggedInUsers.Count)
+                {
+                    sb.Append(",");
+                }
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }

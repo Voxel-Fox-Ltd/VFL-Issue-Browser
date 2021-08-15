@@ -1,5 +1,5 @@
 ﻿
-namespace GithubIssueBrowser
+namespace VFLIssueBrowser
 {
     partial class MainGitIssueWindow
     {
@@ -206,7 +206,7 @@ namespace GithubIssueBrowser
             this.Controls.Add(this.MenuStrip);
             this.MainMenuStrip = this.MenuStrip;
             this.Name = "MainGitIssueWindow";
-            this.Text = "Github Issue Browser";
+            this.Text = "VFL Issue Browser";
             this.UserRepoGroupBox.ResumeLayout(false);
             this.RepoIssuesGroupBox.ResumeLayout(false);
             this.MenuStrip.ResumeLayout(false);
