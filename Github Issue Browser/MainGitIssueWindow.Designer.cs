@@ -39,6 +39,7 @@ namespace VFLIssueBrowser
             this.LoginStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LogoutStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LoadUserReposMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LeftSplitContainer = new System.Windows.Forms.SplitContainer();
             this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.UserRepoGroupBox.SuspendLayout();
@@ -57,6 +58,7 @@ namespace VFLIssueBrowser
             // UserRepoGroupBox
             // 
             this.UserRepoGroupBox.Controls.Add(this.UserRepoListBox);
+            this.UserRepoGroupBox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.UserRepoGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserRepoGroupBox.Location = new System.Drawing.Point(0, 0);
             this.UserRepoGroupBox.Name = "UserRepoGroupBox";
@@ -68,21 +70,10 @@ namespace VFLIssueBrowser
             // UserRepoListBox
             // 
             this.UserRepoListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UserRepoListBox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.UserRepoListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserRepoListBox.FormattingEnabled = true;
             this.UserRepoListBox.ItemHeight = 15;
-            this.UserRepoListBox.Items.AddRange(new object[] {
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i",
-            "j",
-            "k"});
             this.UserRepoListBox.Location = new System.Drawing.Point(3, 19);
             this.UserRepoListBox.Name = "UserRepoListBox";
             this.UserRepoListBox.Size = new System.Drawing.Size(208, 147);
@@ -91,6 +82,7 @@ namespace VFLIssueBrowser
             // RepoIssuesGroupBox
             // 
             this.RepoIssuesGroupBox.Controls.Add(this.RepoIssuesListBox);
+            this.RepoIssuesGroupBox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.RepoIssuesGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RepoIssuesGroupBox.Location = new System.Drawing.Point(0, 0);
             this.RepoIssuesGroupBox.Name = "RepoIssuesGroupBox";
@@ -102,6 +94,7 @@ namespace VFLIssueBrowser
             // RepoIssuesListBox
             // 
             this.RepoIssuesListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.RepoIssuesListBox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.RepoIssuesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RepoIssuesListBox.FormattingEnabled = true;
             this.RepoIssuesListBox.ItemHeight = 15;
@@ -144,7 +137,7 @@ namespace VFLIssueBrowser
             // LoginStripMenuItem
             // 
             this.LoginStripMenuItem.Name = "LoginStripMenuItem";
-            this.LoginStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LoginStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.LoginStripMenuItem.Text = "Login";
             this.LoginStripMenuItem.Click += new System.EventHandler(this.LoginStripMenuItem_Click);
             // 
@@ -152,15 +145,25 @@ namespace VFLIssueBrowser
             // 
             this.LogoutStripMenuItem.Enabled = false;
             this.LogoutStripMenuItem.Name = "LogoutStripMenuItem";
-            this.LogoutStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.LogoutStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.LogoutStripMenuItem.Text = "Logout";
             this.LogoutStripMenuItem.Click += new System.EventHandler(this.LogoutStripMenuItem_Click);
             // 
             // ReposToolStripMenuItem
             // 
+            this.ReposToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LoadUserReposMenuItem});
             this.ReposToolStripMenuItem.Name = "ReposToolStripMenuItem";
             this.ReposToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.ReposToolStripMenuItem.Text = "Repos";
+            // 
+            // LoadUserReposMenuItem
+            // 
+            this.LoadUserReposMenuItem.Enabled = false;
+            this.LoadUserReposMenuItem.Name = "LoadUserReposMenuItem";
+            this.LoadUserReposMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.LoadUserReposMenuItem.Text = "Load User Repos";
+            this.LoadUserReposMenuItem.Click += new System.EventHandler(this.loadUserReposToolStripMenuItem_Click);
             // 
             // LeftSplitContainer
             // 
@@ -240,6 +243,7 @@ namespace VFLIssueBrowser
         private System.Windows.Forms.SplitContainer MainSplitContainer;
         private System.Windows.Forms.ToolStripMenuItem LoginStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem LogoutStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem LoadUserReposMenuItem;
     }
 }
 

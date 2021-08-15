@@ -24,11 +24,24 @@ namespace VFLIssueBrowser
         {
             InitializeComponent();
             LoadLoggedInUsers();
-            if(LoggedInUsers.Count > 0)
+            UpdateUserLoggedInButtons();
+        }
+
+        private void UpdateUserLoggedInButtons()
+        {
+            if (LoggedInUsers.Count > 0)
             {
                 LogoutStripMenuItem.Enabled = true;
                 LoginStripMenuItem.Enabled = false;
                 LoginStripMenuItem.Text = $"Logged in as {LoggedInUsers[0].Username}";
+                LoadUserReposMenuItem.Enabled = true;
+            }
+            else
+            {
+                LogoutStripMenuItem.Enabled = false;
+                LoginStripMenuItem.Enabled = true;
+                LoginStripMenuItem.Text = "Login";
+                LoadUserReposMenuItem.Enabled = false;
             }
         }
 
@@ -101,11 +114,7 @@ namespace VFLIssueBrowser
             foreach(var i in siteContent.Split("&"))
             {
                 var dataSplit = i.Split("=");
-                if(dataSplit[0] == "access_token")
-                {
-                    // Console.WriteLine($"Access token {dataSplit[1]}");
-                    return dataSplit[1].Trim();
-                }
+                if(dataSplit[0] == "access_token") return dataSplit[1].Trim();
             }
             return null;
         }
@@ -166,11 +175,7 @@ namespace VFLIssueBrowser
 
             // Save stuff to file
             SaveLoggedInUsers();
-
-            // Update the menu strip items
-            LogoutStripMenuItem.Enabled = true;
-            LoginStripMenuItem.Enabled = false;
-            LoginStripMenuItem.Text = $"Logged in as {LoggedInUsers[0].Username}";
+            UpdateUserLoggedInButtons();
         }
 
         private void SaveLoggedInUsers()
@@ -216,9 +221,11 @@ namespace VFLIssueBrowser
         private void LogoutStripMenuItem_Click(object sender, EventArgs e)
         {
             LoggedInUsers.Clear();
-            LogoutStripMenuItem.Enabled = false;
-            LoginStripMenuItem.Enabled = true;
-            LoginStripMenuItem.Text = "Login";
+            UpdateUserLoggedInButtons();
+        }
+
+        private void loadUserReposToolStripMenuItem_Click(object sender, EventArgs e)
+        {
         }
     }
 }
