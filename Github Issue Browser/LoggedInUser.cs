@@ -9,12 +9,6 @@ namespace VFLIssueBrowser
         public string Username { get; set; }
         public string AuthToken { get; set; }
 
-        public LoggedInUser(string username, string authToken)
-        {
-            Username = username;
-            AuthToken = authToken;
-        }
-
         public string ToJson()
         {
             return $"{{\"Username\": \"{Username}\", \"AuthToken\": \"{AuthToken}\"}}";

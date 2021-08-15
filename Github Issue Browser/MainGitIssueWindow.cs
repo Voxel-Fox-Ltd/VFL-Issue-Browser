@@ -23,6 +23,13 @@ namespace VFLIssueBrowser
         public MainGitIssueWindow()
         {
             InitializeComponent();
+            LoadLoggedInUsers();
+            if(LoggedInUsers.Count > 0)
+            {
+                LogoutStripMenuItem.Enabled = true;
+                LoginStripMenuItem.Enabled = false;
+                LoginStripMenuItem.Text = $"Logged in as {LoggedInUsers[0].Username}";
+            }
         }
 
         private GithubDeviceCode GetDeviceFlowCode()
@@ -150,10 +157,20 @@ namespace VFLIssueBrowser
             // Get their access token and username
             string at = GetGithubAccessToken(deviceFlow);
             string username = GetGithubUsername(at);
-            LoggedInUsers.Add(new LoggedInUser(username, at));
+            LoggedInUser u = new LoggedInUser
+            {
+                Username = username,
+                AuthToken = at
+            };
+            LoggedInUsers.Add(u);
 
             // Save stuff to file
             SaveLoggedInUsers();
+
+            // Update the menu strip items
+            LogoutStripMenuItem.Enabled = true;
+            LoginStripMenuItem.Enabled = false;
+            LoginStripMenuItem.Text = $"Logged in as {LoggedInUsers[0].Username}";
         }
 
         private void SaveLoggedInUsers()
@@ -194,6 +211,14 @@ namespace VFLIssueBrowser
             }
             sb.Append("]");
             return sb.ToString();
+        }
+
+        private void LogoutStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoggedInUsers.Clear();
+            LogoutStripMenuItem.Enabled = false;
+            LoginStripMenuItem.Enabled = true;
+            LoginStripMenuItem.Text = "Login";
         }
     }
 }

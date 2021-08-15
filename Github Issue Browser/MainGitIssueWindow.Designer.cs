@@ -144,15 +144,17 @@ namespace VFLIssueBrowser
             // LoginStripMenuItem
             // 
             this.LoginStripMenuItem.Name = "LoginStripMenuItem";
-            this.LoginStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.LoginStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.LoginStripMenuItem.Text = "Login";
             this.LoginStripMenuItem.Click += new System.EventHandler(this.LoginStripMenuItem_Click);
             // 
             // LogoutStripMenuItem
             // 
+            this.LogoutStripMenuItem.Enabled = false;
             this.LogoutStripMenuItem.Name = "LogoutStripMenuItem";
-            this.LogoutStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.LogoutStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.LogoutStripMenuItem.Text = "Logout";
+            this.LogoutStripMenuItem.Click += new System.EventHandler(this.LogoutStripMenuItem_Click);
             // 
             // ReposToolStripMenuItem
             // 
@@ -237,7 +239,7 @@ namespace VFLIssueBrowser
         private System.Windows.Forms.SplitContainer LeftSplitContainer;
         private System.Windows.Forms.SplitContainer MainSplitContainer;
         private System.Windows.Forms.ToolStripMenuItem LoginStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem LogoutStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem LogoutStripMenuItem;
     }
 }
 
